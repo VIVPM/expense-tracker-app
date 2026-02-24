@@ -13,4 +13,15 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    outDir: 'build', // Deploy providers often look for 'build' instead of 'dist'
+    chunkSizeWarningLimit: 1000, // Increase limits to remove warnings during build
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom', 'axios', 'recharts', 'lucide-react']
+        }
+      }
+    }
+  },
 })
