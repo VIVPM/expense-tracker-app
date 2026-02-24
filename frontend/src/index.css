@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply font-sans antialiased bg-gray-50 text-gray-900;
+        font-family: 'Inter', sans-serif;
+    }
+}
+
+.glass-panel {
+    @apply bg-white bg-opacity-90 backdrop-filter backdrop-blur-lg border border-white/20 shadow-xl;
+}
+
+.gradient-bg {
+    @apply bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500;
+}
+
+.card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+}
