@@ -9,3 +9,4 @@ python-multipart
 google-genai
 python-dotenv
 libsql-client
+sqlalchemy-libsql
