@@ -1,2 +1,4 @@
 create_admin.py
 .env
+transfer_data.py
+expenses.db

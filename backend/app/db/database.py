@@ -1,8 +1,15 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./expenses.db"
+turso_url = os.environ.get("TURSO_DATABASE_URL")
+turso_auth_token = os.environ.get("TURSO_AUTH_TOKEN")
+
+if turso_url and turso_auth_token:
+    SQLALCHEMY_DATABASE_URL = f"sqlite+libsql://{turso_url.replace('libsql://', '').replace('https://', '')}/?authToken={turso_auth_token}&secure=true"
+else:
+    SQLALCHEMY_DATABASE_URL = "sqlite:///./expenses.db"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
