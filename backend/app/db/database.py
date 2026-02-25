@@ -3,13 +3,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-turso_url = os.environ.get("TURSO_DATABASE_URL")
-turso_auth_token = os.environ.get("TURSO_AUTH_TOKEN")
-
-if turso_url and turso_auth_token:
-    SQLALCHEMY_DATABASE_URL = f"sqlite+libsql://{turso_url.replace('libsql://', '').replace('https://', '')}/?authToken={turso_auth_token}&secure=true"
-else:
-    SQLALCHEMY_DATABASE_URL = "sqlite:///./expenses.db"
+# Due to Render.com build limitations with Rust/libsql, we fall back to a local disk SQLite file. 
+# Note: On Render free tier, this file is ephemeral and will reset on deploy. 
+# Ideally, upgrade to Render Postgres for a persistent database.
+SQLALCHEMY_DATABASE_URL = "sqlite:///./expenses.db"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
