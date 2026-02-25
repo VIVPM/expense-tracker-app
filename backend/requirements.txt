@@ -8,3 +8,4 @@ bcrypt==4.0.1
 python-multipart
 google-genai
 python-dotenv
+psycopg2-binary

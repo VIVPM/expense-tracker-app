@@ -3,14 +3,19 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Due to Render.com build limitations with Rust/libsql, we fall back to a local disk SQLite file. 
-# Note: On Render free tier, this file is ephemeral and will reset on deploy. 
-# Ideally, upgrade to Render Postgres for a persistent database.
-SQLALCHEMY_DATABASE_URL = "sqlite:///./expenses.db"
+# Fetch database URL from environment, defaulting to local SQLite
+DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///./expenses.db")
 
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-)
+# SQLAlchemy requires "postgresql://" but some platforms provide "postgres://"
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+# PostgreSQL does not need "check_same_thread"
+connect_args = {}
+if DATABASE_URL.startswith("sqlite"):
+    connect_args = {"check_same_thread": False}
+
+engine = create_engine(DATABASE_URL, connect_args=connect_args)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
