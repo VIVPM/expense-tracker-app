@@ -203,8 +203,6 @@ python create_admin.py
 | Expenses | `/expenses` | Create, read, update, delete expenses |
 | Chats | `/chats` | AI-powered expense Q&A via Google Gemini |
 
-Full interactive documentation: `http://localhost:8000/docs`
-
 ---
 
 ## 📄 License
